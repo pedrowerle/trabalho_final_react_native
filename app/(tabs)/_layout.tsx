@@ -1,43 +1,55 @@
-import { Tabs } from 'expo-router';
 import React from 'react';
 import { Platform } from 'react-native';
+import { Tabs } from 'expo-router';
 
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { HapticTab } from '@/components/HapticTab'; // Componente customizado para tabs com feedback tátil.
+import { IconSymbol } from '@/components/ui/IconSymbol'; // Componente para renderizar ícones na tab bar.
+import TabBarBackground from '@/components/ui/TabBarBackground'; // Componente para o fundo customizado da tab bar.
+import { Colors } from '@/constants/Colors'; // Constantes de cores para temas.
+import { useColorScheme } from '@/hooks/useColorScheme'; // Hook para detectar o esquema de cores do sistema (claro/escuro).
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  // Detecta o tema do sistema (claro ou escuro)
+  const colorScheme = useColorScheme(); 
 
   return (
     <Tabs
+      // Opções de estilização e confiugração das tela
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
+        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint, // Define a cor ativa com base no tema.
+        headerShown: false, // Remove o cabeçalho padrão das telas.
+        tabBarButton: HapticTab, // Adiciona feedback tátil aos botões da tab bar.
+        tabBarBackground: TabBarBackground, // Aplica o fundo customizado à tab bar.
         tabBarStyle: Platform.select({
           ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
+            // Em iOS, posiciona a tab bar de forma flutuante.
+            position: 'absolute', 
           },
-          default: {},
+          // Em outras plataformas, usa o estilo padrão.
+          default: {}, 
         }),
-      }}>
+      }}
+    >
+      
+      // CONFIGURAÇÕES DOS BOTÕES INFERIORES DA TELA
+
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: 'Início', 
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="house.fill" color={color} />
+          ),
         }}
       />
+      
       <Tabs.Screen
-        name="explore"
+        name="response"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Receita', 
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="book.fill" color={color} />
+          ), 
         }}
       />
     </Tabs>
